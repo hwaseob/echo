@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: netty-echo
+  labels:
+    app: netty-echo
+spec:
+  containers:
+    - name: netty-echo
+      image: netty_echo
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 1111
+  restartPolicy: Always
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+  labels:
+    app: echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      name: echo
+      labels:
+        app: echo
+    spec:
+      containers:
+        - name: echo
+          image: reg.svc.uangel.com:5000/netty_echo
+          imagePullPolicy: Always #IfNotPresent
+          ports:
+            - containerPort: 1111
+          volumeMounts:
+            - name: vol01
+              mountPath: /dat
+        - name: nginx
+          image: nginx
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: vol01
+              mountPath: /usr/share/nginx/html
+      restartPolicy: Always
+      volumes:
+        - name: vol01
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo
+spec:
+  selector:
+    app: echo
+  ports:
+    - port: 2222
+      targetPort: 1111
+  type: ClusterIP

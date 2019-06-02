@@ -3,7 +3,7 @@ node {
     def project = 'netty_echo'
     def appName = 'echo'
     //def serviceName = "${appName}-backend"
-    def imageVersion = '1'
+    def imageVersion = '2'
     def namespace = 'dev'
     def registry = "reg.svc.uangel.com:5000"
     def imageTag = "${registry}/${project}:${imageVersion}"

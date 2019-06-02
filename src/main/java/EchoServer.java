@@ -32,7 +32,7 @@ public class EchoServer {
                                                    .bind(port)
                                                    .sync();
             log.info("listen " + port);
-            log.info("2222222223334");
+            log.info("33333334");
             f.channel().closeFuture().sync();
         } finally {
             worker.shutdownGracefully();

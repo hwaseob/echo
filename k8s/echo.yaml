@@ -1,53 +1,53 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: netty-echo
-  labels:
-    app: netty-echo
-spec:
-  containers:
-    - name: netty-echo
-      image: netty_echo
-      imagePullPolicy: IfNotPresent
-      ports:
-        - containerPort: 1111
-  restartPolicy: Always
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: netty-echo
-  labels:
-    app: netty-echo
-spec:
-  replicas: 1
-  template:
-    metadata:
-      name: netty-echo
-      labels:
-        app: netty-echo
-    spec:
-      containers:
-        - name: netty-echo
-          image: reg.svc.uangel.com:5000/netty_echo
-          imagePullPolicy: Always #IfNotPresent
-      restartPolicy: Always
-  selector:
-    matchLabels:
-      app: netty-echo
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: netty-echo
-spec:
-  selector:
-    app: netty-echo
-  ports:
-    - port: 2222
-      targetPort: 1111
-  type: LoadBalancer
----
+#apiVersion: v1
+#kind: Pod
+#metadata:
+#  name: netty-echo
+#  labels:
+#    app: netty-echo
+#spec:
+#  containers:
+#    - name: netty-echo
+#      image: netty_echo
+#      imagePullPolicy: IfNotPresent
+#      ports:
+#        - containerPort: 1111
+#  restartPolicy: Always
+#---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: netty-echo
+#  labels:
+#    app: netty-echo
+#spec:
+#  replicas: 1
+#  template:
+#    metadata:
+#      name: netty-echo
+#      labels:
+#        app: netty-echo
+#    spec:
+#      containers:
+#        - name: netty-echo
+#          image: reg.svc.uangel.com:5000/netty_echo
+#          imagePullPolicy: Always #IfNotPresent
+#      restartPolicy: Always
+#  selector:
+#    matchLabels:
+#      app: netty-echo
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: netty-echo
+#spec:
+#  selector:
+#    app: netty-echo
+#  ports:
+#    - port: 2222
+#      targetPort: 1111
+#  type: LoadBalancer
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -101,18 +101,18 @@ spec:
     - name: http
       port: 80
   type: ClusterIP
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: httpd
-  labels:
-    app: httpd
-spec:
-  containers:
-    - name: nginx
-      image: nginx
-      imagePullPolicy: IfNotPresent
-      ports:
-        - containerPort: 80
-  restartPolicy: Always
+#---
+#apiVersion: v1
+#kind: Pod
+#metadata:
+#  name: httpd
+#  labels:
+#    app: httpd
+#spec:
+#  containers:
+#    - name: nginx
+#      image: nginx
+#      imagePullPolicy: IfNotPresent
+#      ports:
+#        - containerPort: 80
+#  restartPolicy: Always

@@ -67,7 +67,7 @@ spec:
     spec:
       containers:
         - name: echo
-          image: reg.svc.uangel.com:5000/netty_echo
+          image: reg.svc.uangel.com:5000/netty_echo:1
           imagePullPolicy: Always
           ports:
             - containerPort: 1111

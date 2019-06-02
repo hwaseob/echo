@@ -11,6 +11,10 @@ node {
     //Checkout Code from Git
     checkout scm
 
+    stage('Build') {
+        sh("mvn clean package")
+    }
+
     //Stage 1 : Build the docker image.
     stage('Build image') {
         sh("docker build -t ${imageTag} .")

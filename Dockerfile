@@ -1,6 +1,4 @@
 FROM java:8
-RUN ["mvn", "package"]
-
 WORKDIR /usr/local/netty_echo
 
 COPY lib/*.jar ./lib/

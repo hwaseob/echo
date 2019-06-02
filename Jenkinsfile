@@ -12,7 +12,7 @@ node {
     checkout scm
 
     stage('Build') {
-        sh("mvn clean package")
+        sh("/usr/local/bin/mvn clean package")
     }
 
     //Stage 1 : Build the docker image.

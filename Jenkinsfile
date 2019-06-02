@@ -6,7 +6,7 @@ node {
     def imageVersion = '1'
     def namespace = 'dev'
     def registry = "reg.svc.uangel.com:5000"
-    def imageTag = "${registry}/${project}:${imageVersion}"
+    def imageTag = "${registry}/${project}:${imageVersion}.${env.BUILD_NUMBER}"
 
     //Checkout Code from Git
     checkout scm

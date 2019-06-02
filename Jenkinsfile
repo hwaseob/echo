@@ -28,6 +28,7 @@ node {
     //Stage 3 : Deploy Application
     stage('Deploy Application') {
         sh("kubectl get ns ${namespace} || kubectl create ns ${namespace}")
+        sh("sed -i.bak 's#${registry}/${project}.*#${imageTag}#' ./k8s/*.yaml")
         sh("kubectl --namespace=${namespace} apply -f k8s/echo.yaml")
         //sh("echo http://`kubectl --namespace=${namespace} get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
 

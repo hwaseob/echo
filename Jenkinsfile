@@ -4,7 +4,8 @@ node {
     def appName = 'echo'
     //def serviceName = "${appName}-backend"
     def imageVersion = '1'
-    def namespace = 'dev'
+    //def namespace = 'dev'
+    def namespace = 'default'
     def registry = "reg.svc.uangel.com:5000"
     def imageTag = "${registry}/${project}:${imageVersion}.${env.BUILD_NUMBER}"
 

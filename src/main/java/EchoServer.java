@@ -21,18 +21,11 @@ public class EchoServer {
                                                    .channel(NioServerSocketChannel.class)
                                                    .option(ChannelOption.SO_BACKLOG, 100)
 //                                                   .handler(new LoggingHandler(LogLevel.INFO))
-                                                   .childHandler(new ChannelInitializer<SocketChannel>() {
-                                                       @Override
-                                                       protected void initChannel(SocketChannel socketChannel) {
-                                                           ChannelPipeline p = socketChannel.pipeline();
-                                                           p.addLast(new LoggingHandler(LogLevel.INFO));
-                                                           p.addLast(new EchoServerHandler());
-                                                       }
-                                                   })
+                                                   .childHandler(new EchoServerInitializer())
                                                    .bind(port)
                                                    .sync();
             log.info("listen " + port);
-            log.info("33333334");
+//            log.info("33333334");
             f.channel().closeFuture().sync();
         } finally {
             worker.shutdownGracefully();

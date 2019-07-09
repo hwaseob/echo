@@ -5,8 +5,12 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 
 public class EchoServer {
@@ -14,6 +18,9 @@ public class EchoServer {
 
     public static void main(String[] args) throws Exception {
         int port = 1111;
+        SslContext sslContext= SslContextBuilder.forServer(new File("ssl/server.crt"),
+                                                           new File("ssl/server_pk8.pem")).build();
+        sslContext= null;
         EventLoopGroup acceptor = new NioEventLoopGroup(1);
         EventLoopGroup worker = new NioEventLoopGroup();
         try {
@@ -21,7 +28,7 @@ public class EchoServer {
                                                    .channel(NioServerSocketChannel.class)
                                                    .option(ChannelOption.SO_BACKLOG, 100)
 //                                                   .handler(new LoggingHandler(LogLevel.INFO))
-                                                   .childHandler(new EchoServerInitializer())
+                                                   .childHandler(new EchoServerInitializer(sslContext))
                                                    .bind(port)
                                                    .sync();
             log.info("listen " + port);

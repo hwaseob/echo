@@ -6,13 +6,20 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 public class client {
     static final Logger log = LoggerFactory.getLogger(client.class);
 
     public static void main(String[] args) throws Exception {
+
+        SslContext sslContext= SslContextBuilder.forClient().trustManager(new File("ssl/server.crt")).build();
+        sslContext= null;
 
         EventLoopGroup group = new NioEventLoopGroup();
 //        EventLoopGroup group = new OioEventLoopGroup();
@@ -25,7 +32,7 @@ public class client {
 //                                             .handler(new DialogServerInitializer())
 //                                             .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000)
 //                                             .option(ChannelOption.SO_TIMEOUT, 3000)
-                                             .handler(new EchoClientInitializer())
+                                             .handler(new EchoClientInitializer(sslContext))
                                              .connect("localhost", 1111)
                                              .sync();
 
